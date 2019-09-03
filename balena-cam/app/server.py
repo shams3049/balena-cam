@@ -1,5 +1,4 @@
 import asyncio, json, os, cv2, platform, sys
-import datetime
 from time import sleep
 from aiohttp import web
 from av import VideoFrame
@@ -9,7 +8,6 @@ from aiohttp_basicauth import BasicAuthMiddleware
 class CameraDevice():
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
-        self.now = datetime.datetime.now()
         self.cap.set(3, 640)
         self.cap.set(4, 480)
 
@@ -29,8 +27,7 @@ class CameraDevice():
     async def get_jpeg_frame(self):
         encode_param = (int(cv2.IMWRITE_JPEG_QUALITY), 90)
         frame = await self.get_latest_frame()
-        frame1 = await self.now
-        frame, encimg = cv2.imencode('.jpg', frame, frame1, encode_param)
+        frame, encimg = cv2.imencode('.jpg', frame, encode_param)
         return encimg.tostring()
 
 class PeerConnectionFactory():
