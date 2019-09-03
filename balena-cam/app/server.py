@@ -15,7 +15,7 @@ class CameraDevice():
         if flip:
             (h, w) = frame.shape[:2]
             center = (w/2, h/2)
-            M = cv2.getRotationMatrix2D(center, 0, 1.0)
+            M = cv2.getRotationMatrix2D(center, 180, 1.0)
             frame = cv2.warpAffine(frame, M, (w, h))
         return frame
 
