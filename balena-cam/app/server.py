@@ -23,8 +23,8 @@ class CameraDevice():
 
     async def get_latest_frame(self):
         font = cv2.FONT_HERSHEY_COMPLEX
-        frame = self.cap.read()
-        ret, frame = cv2.putText(frame, self.datet, (10,50), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
+        ret, frame = self.cap.read()
+        frame = cv2.putText(frame, self.datet, (10,50), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
         await asyncio.sleep(0)
         return self.rotate(frame)
 
