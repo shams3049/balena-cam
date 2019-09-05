@@ -1,4 +1,5 @@
 import asyncio, json, os, cv2, platform, sys
+import datetime
 from time import sleep
 from aiohttp import web
 from av import VideoFrame
@@ -10,6 +11,7 @@ class CameraDevice():
         self.cap = cv2.VideoCapture(0)
         self.cap.set(3, 640)
         self.cap.set(4, 480)
+        self.datet = str(datetime.datetime.now())
 
     def rotate(self, frame):
         if flip:
@@ -20,7 +22,9 @@ class CameraDevice():
         return frame
 
     async def get_latest_frame(self):
-        ret, frame = self.cap.read()
+        font = cv2.FONT_HERSHEY_COMPLEX
+        frame = self.cap.read()
+        ret, frame = cv2.putText(frame, self.datet, (10,50), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
         await asyncio.sleep(0)
         return self.rotate(frame)
 
